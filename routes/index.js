@@ -20,10 +20,12 @@ router.post("/register", function(req, res){
         if(err){
             //抓到錯誤會回到註冊頁面
             console.log(err);
+            req.flash("error", err.message);
             return res.render("register");
         }
         //將使用者的資訊透過local傳給註冊的函式進行註冊
         passport.authenticate("local")(req, res, function(){
+            req.flash("success", "Welcome to Yelpcamp" + user.username)
             res.redirect("/campgrounds");
         });
     });
@@ -45,15 +47,9 @@ router.post("/login", passport.authenticate("local",
 //logout route
 router.get("/logout", function(req, res){
     req.logout();
+    req.flash("success", "Successfully Logged out!!");
     res.redirect("/campgrounds");
 });
 
-//middleware
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router;
