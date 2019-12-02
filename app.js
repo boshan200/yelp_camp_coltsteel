@@ -19,7 +19,7 @@ var campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes       = require("./routes/index");
 
 //mongoose set + ejs template
-mongoose.connect("mongodb+srv://boshan:Kassadin100@cluster0-avpci.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://boshan:boshan200@cluster0-avpci.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true, 
     useUnifiedTopology: true
 }).then(() => {
