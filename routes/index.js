@@ -10,7 +10,7 @@ router.get("/", function(req, res){
 
 //register form
 router.get("/register", function(req, res){
-    res.render("register");
+    res.render("register", {page: 'register'});
 });
 
 //handle sign up logic
@@ -18,10 +18,8 @@ router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            //抓到錯誤會回到註冊頁面
             console.log(err);
-            req.flash("error", err.message);
-            return res.render("register");
+            return res.render("register", {error: err.message});
         }
         //將使用者的資訊透過local傳給註冊的函式進行註冊
         passport.authenticate("local")(req, res, function(){
@@ -33,7 +31,7 @@ router.post("/register", function(req, res){
 
 //show login form
 router.get("/login", function(req, res){
-    res.render("login");
+    res.render("login", {page: 'login'});
 });
 
 //handlong login logic

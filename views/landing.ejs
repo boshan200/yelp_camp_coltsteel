@@ -22,7 +22,14 @@
     </div>
     <div id="landing-header">
         <h1>Welcome to YelpCamp!</h1>
-
+        <p>
+            <form action="/campgrounds" method="GET" class="form-inline">
+                <div class="form-group">
+                    <input type="text" name="search" placeholder="Campground search..." class="form-control">
+                    <input type="submit" value="Search" class="btn btn-default">
+                </div>
+            </form>
+        </p>
         <a href="/campgrounds" class="btn btn-lg btn-success">View ALL Campogrounds</a>
     </div>
 

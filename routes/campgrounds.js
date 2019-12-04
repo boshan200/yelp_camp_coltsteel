@@ -5,13 +5,30 @@ var middleware = require("../middleware");
 
 //INDEX - SHOW ALL Campgrounds
 router.get("/", function(req, res){
-    Campground.find({}, function(err, allcampgrounds){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("campgrounds/index", {campgrounds:allcampgrounds});
-        }
-    });
+    var noMatch = null;
+    if (req.query.search){
+        //確認搜尋字串並且過濾
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    //search filter更新,新增以正則表達式做為關鍵字
+        Campground.find({name: regex}, function(err, allcampgrounds){
+            if(err){
+                console.log(err);
+            } else {
+                if(allcampgrounds.length < 1){
+                    noMatch = "No campgrounds match that query, please try again.";
+                }
+                res.render("campgrounds/index", {campgrounds:allcampgrounds, noMatch:noMatch, page: 'campgrounds'});
+            }
+        });
+    } else {
+        Campground.find({}, function(err, allCampgrounds){
+            if(err){
+                console.log(err);
+            } else {
+               res.render("campgrounds/index",{campgrounds:allCampgrounds, noMatch: noMatch, page: 'campgrounds'});
+            }
+         });
+    }
 });
 
 //create a new campground and save to DB
@@ -75,6 +92,10 @@ router.delete("/:id", middleware.checkCampgroundOwnership,function(req, res){
             res.redirect("/campgrounds");
     });
 });
+
+function escapeRegex(text){
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 //export routes

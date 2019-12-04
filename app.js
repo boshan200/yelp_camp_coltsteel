@@ -19,7 +19,8 @@ var campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes       = require("./routes/index");
 
 //mongoose set + ejs template
-mongoose.connect(process.env.DBURL, {
+var url = process.env.DBURL || "mongodb://localhost/yelp_camp";
+mongoose.connect(url, {
     useNewUrlParser: true, 
     useUnifiedTopology: true
 }).then(() => {
