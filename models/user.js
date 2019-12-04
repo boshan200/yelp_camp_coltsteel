@@ -4,7 +4,9 @@ var mongoose = require("mongoose"),
 
 var UserSchema = new mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    //設定管理者權限參數
+    isAdmin: {type: Boolean, default: false}
 });
 
 UserSchema.plugin(passportLocalMongoose);

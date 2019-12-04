@@ -16,6 +16,11 @@ router.get("/register", function(req, res){
 //handle sign up logic
 router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username});
+    //管理者更新
+    //如果在創建帳戶時提供特定通行碼則設為管理員
+    if (req.body.adminCode === 'boshan200'){
+        newUser.isAdmin = true;
+    }
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             console.log(err);

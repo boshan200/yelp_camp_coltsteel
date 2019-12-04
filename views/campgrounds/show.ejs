@@ -19,7 +19,9 @@
                         <p>
                            <em>Edit by:<%= campground.author.username %></em>
                         </p>
-                        <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                        <!--管理者更新-->
+                        <!--如果使用者是管理員或創建者則顯示編輯與刪除的選項-->
+                        <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                             <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                             <form class="delete-form" action="/campgrounds/<%= campground._id%>?_method=DELETE" method="POST">
                                 <button class="btn btn-danger">Delete</button>
@@ -41,7 +43,9 @@
                                     <%= comment.text %>
                                 </p>
                                 <!--檢查是否為發表評論之使用者，是則顯示按鈕-->
-                                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                <!--管理者更新:-->
+                                <!--如果使用者是管理員或創建者則顯示編輯與刪除的選項-->
+                                <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                                     <a class="btn btn-xs btn-warning" 
                                     href="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>/edit">
                                     Edit</a>
