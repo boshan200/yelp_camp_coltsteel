@@ -6,6 +6,9 @@ var UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     //設定管理者權限參數
+    avatar: String,
+    firstName: String,
+    lastName: String,
     isAdmin: {type: Boolean, default: false}
 });
 

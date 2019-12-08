@@ -2,6 +2,7 @@ var express    = require("express");
 var router     = express.Router(),
     passport   = require("passport"),
     User       = require("../models/user");
+    Campground = require("../models/campground");
 
 //root route
 router.get("/", function(req, res){
@@ -15,7 +16,14 @@ router.get("/register", function(req, res){
 
 //handle sign up logic
 router.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username});
+    var newUser = new User(
+        {
+            username: req.body.username, 
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            avatar: req.body.avatar
+        });
     //管理者更新
     //如果在創建帳戶時提供特定通行碼則設為管理員
     if (req.body.adminCode === 'boshan200'){
@@ -52,6 +60,23 @@ router.get("/logout", function(req, res){
     req.logout();
     req.flash("success", "Successfully Logged out!!");
     res.redirect("/campgrounds");
+});
+
+//user profile
+router.get("/users/:id", function(req, res){
+    User.findById(req.params.id, function(err, foundUser){
+        if(err){
+            req.flash("error", "Something goes worng :(");
+            return res.redirect("/");
+        }
+        Campground.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds){
+            if(err){
+                req.flash("error", "Something goes worng :(");
+                return res.redirect("/");
+            }
+            res.render("users/show", {user:foundUser, campgrounds:campgrounds});
+        });
+    });
 });
 
 

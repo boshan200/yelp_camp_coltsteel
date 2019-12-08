@@ -17,7 +17,7 @@
                         <h4><a href=""><%= campground.name %></a></h4>
                         <p><%= campground.description %></p>
                         <p>
-                           <em>Edit by:<%= campground.author.username %></em>
+                           <em>Edit <a href="/users/<%= campground.author.id %>"><%= campground.author.username %> </a>, <%= moment(campground.createdAt).fromNow() %></em>
                         </p>
                         <!--管理者更新-->
                         <!--如果使用者是管理員或創建者則顯示編輯與刪除的選項-->
@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <strong><%= comment.author.username %></strong>
-                                <span class="pull-right">10 days ago</span>
+                                <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
                                 <p>
                                     <%= comment.text %>
                                 </p>

@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 
 var commentSchema = mongoose.Schema({
     text: String,
+    createdAt: {type: Date, default: Date.now},
     //下面這個只能在mongo等資料庫裡面做
     author: {
         id:{

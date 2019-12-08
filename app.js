@@ -36,6 +36,9 @@ app.use(express.static(__dirname+"/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 
+//加入用來顯示創立文章時間的工具
+app.locals.moment = require('moment');
+
 //PASSPORT CONFIGRATION
 app.use(require("express-session")({
     secret: "boshan200",
