@@ -62,8 +62,8 @@
 
     <script>
         function initMap() {
-          var lat = <%= campground.lat %> ;
-          var lng = <%= campground.lng %> ;
+          var lat =  campground.lat  ;
+          var lng = campground.lng ;
           var center = {lat: lat, lng: lng };
           var map = new google.maps.Map(document.getElementById('map'), {
               zoom: 8,

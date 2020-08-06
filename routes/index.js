@@ -6,6 +6,7 @@ var router     = express.Router(),
     async      = require("async");
     nodemailer = require("nodemailer");
     crypto     = require("crypto");
+    middleware = require("../middleware");
 
 //root route
 router.get("/", function(req, res){
@@ -139,6 +140,7 @@ router.get('/forgot', (req, res)=> {
     });
   });
   
+  //驗證是否超出密碼設定的期限
   router.get('/reset/:token', (req, res)=> {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
       if (!user) {
@@ -198,5 +200,6 @@ router.get('/forgot', (req, res)=> {
       res.redirect('/campgrounds');
     });
   });
+
 
 module.exports = router;
